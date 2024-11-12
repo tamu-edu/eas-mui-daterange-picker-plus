@@ -276,6 +276,7 @@ export default function YourComponent() {
 | `labels`               | `Labels`                         | -                                       | Customize labels used in UI (Apply, Cancel, Start Date, End Date etc.) |
 | `hideDefaultRanges`    | `boolean`                        | false                                   | Option to hide default predefined ranges.                              |
 | `hideOutsideMonthDays` | `boolean`                        | true                                    | Option to hide days outside the current month.                         |
+| `single?`              | `boolean`                        | false                                   | Option to display only a single calendar and select one date.                          |
 
 > Make sure to provide `initialDateRange` within the min and max date.
 
@@ -345,7 +346,7 @@ type PickerProps = {
   dateRange?: DateRange;
   locale?: Locale;
   onChange?: (dateRange: DateRange) => void;
-
+  single?: boolean;
   hideDefaultRanges?: boolean;
   hideOutsideMonthDays?: boolean;
 };
