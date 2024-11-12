@@ -41,6 +41,7 @@ export type PickerProps = {
   dateRange?: DateRange;
   hideDefaultRanges?: boolean;
   hideOutsideMonthDays?: boolean;
+  single?: boolean;
 };
 
 export type ModalCustomProps = {

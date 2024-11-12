@@ -38,6 +38,7 @@ type FooterProps = {
   endDate?: Date;
   locale?: Locale;
   labels?: Labels;
+  single?: boolean;
 } & Omit<ModalCustomProps, "onSubmit"> & {
     onSubmit: () => void;
   };
@@ -50,6 +51,7 @@ export const Footer = ({
   onCloseCallback,
   onSubmit,
   RangeSeparatorIcons,
+  single,
 }: FooterProps) => {
   const theme = useTheme();
   const previewDate = (date: Date) => {
@@ -59,94 +61,106 @@ export const Footer = ({
   const IconXs = RangeSeparatorIcons?.xs || KeyboardDoubleArrowDown;
   const IconMd = RangeSeparatorIcons?.md || KeyboardDoubleArrowRight;
 
-  return (
-    <>
+  if (single) {
+    return (
       <Grid2
-        xs
+        xs="auto"
         container
-        gap={"8px"}
-        direction={{
-          xs: "column",
-          md: "row",
-        }}
-        justifyContent="flex-start"
-        alignItems={"center"}
+        justifyContent={"flex-end"}
       >
-        {startDate ? (
-          <PreviewDateTypoStyled
-            textAlign={{
-              xs: "center",
-              md: "left",
-            }}
-          >
-            {previewDate(startDate)}
-          </PreviewDateTypoStyled>
-        ) : (
-          <PreviewDateMessageTypoStyled
-            textAlign={{
-              xs: "center",
-              md: "left",
-            }}
-          >
-            {labels?.footer?.startDate || 'Start Date'}
-          </PreviewDateMessageTypoStyled>
-        )}
-
-        <IconXs
-          fontSize="small"
-          sx={{
-            fill: theme.palette.grey[400],
-            display: {
-              xs: "block",
-              md: "none",
-            },
-          }}
-        />
-
-        <IconMd
-          fontSize="small"
-          sx={{
-            fill: theme.palette.grey[400],
-            display: {
-              xs: "none",
-              md: "block",
-            },
-          }}
-        />
-
-        {endDate ? (
-          <PreviewDateTypoStyled
-            textAlign={{
-              xs: "center",
-              md: "left",
-            }}
-          >
-            {previewDate(endDate)}
-          </PreviewDateTypoStyled>
-        ) : (
-          <PreviewDateMessageTypoStyled
-            textAlign={{
-              xs: "center",
-              md: "left",
-            }}
-          >
-            {labels?.footer?.endDate || 'End Date'}
-          </PreviewDateMessageTypoStyled>
-        )}
-      </Grid2>
-
-      <Grid2
-        display={{
-          xs: "block",
-          md: "none",
-        }}
-      >
-        <Divider orientation="horizontal" />
-      </Grid2>
-
-      <Grid2 xs="auto" container justifyContent={"flex-end"}>
         <Actions onCloseCallback={onCloseCallback} onSubmit={onSubmit} labels={labels?.actions} />
       </Grid2>
-    </>
-  );
+    );
+  } else {
+    return (
+      <>
+        <Grid2
+          xs
+          container
+          gap={"8px"}
+          direction={{
+            xs: "column",
+            md: "row",
+          }}
+          justifyContent="flex-start"
+          alignItems={"center"}
+        >
+          {startDate ? (
+            <PreviewDateTypoStyled
+              textAlign={{
+                xs: "center",
+                md: "left",
+              }}
+            >
+              {previewDate(startDate)}
+            </PreviewDateTypoStyled>
+          ) : (
+            <PreviewDateMessageTypoStyled
+              textAlign={{
+                xs: "center",
+                md: "left",
+              }}
+            >
+              {labels?.footer?.startDate || 'Start Date'}
+            </PreviewDateMessageTypoStyled>
+          )}
+
+          <IconXs
+            fontSize="small"
+            sx={{
+              fill: theme.palette.grey[400],
+              display: {
+                xs: "block",
+                md: "none",
+              },
+            }}
+          />
+
+          <IconMd
+            fontSize="small"
+            sx={{
+              fill: theme.palette.grey[400],
+              display: {
+                xs: "none",
+                md: "block",
+              },
+            }}
+          />
+
+          {endDate ? (
+            <PreviewDateTypoStyled
+              textAlign={{
+                xs: "center",
+                md: "left",
+              }}
+            >
+              {previewDate(endDate)}
+            </PreviewDateTypoStyled>
+          ) : (
+            <PreviewDateMessageTypoStyled
+              textAlign={{
+                xs: "center",
+                md: "left",
+              }}
+            >
+              {labels?.footer?.endDate || 'End Date'}
+            </PreviewDateMessageTypoStyled>
+          )}
+        </Grid2>
+
+        <Grid2
+          display={{
+            xs: "block",
+            md: "none",
+          }}
+        >
+          <Divider orientation="horizontal" />
+        </Grid2>
+
+        <Grid2 xs="auto" container justifyContent={"flex-end"}>
+          <Actions onCloseCallback={onCloseCallback} onSubmit={onSubmit} labels={labels?.actions} />
+        </Grid2>
+      </>
+    );
+  }
 };

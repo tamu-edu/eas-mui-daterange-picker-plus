@@ -55,6 +55,7 @@ type SectionsProps = {
   };
   onCloseCallback?: () => void;
   footerRequired?: boolean;
+  single?: boolean;
 };
 
 export const Sections = (props: SectionsProps) => {
@@ -81,6 +82,7 @@ export const Sections = (props: SectionsProps) => {
     RangeSeparatorIcons,
     onCloseCallback,
     footerRequired,
+    single,
   } = props;
 
   const { startDate, endDate } = dateRange;
@@ -262,7 +264,7 @@ export const Sections = (props: SectionsProps) => {
         </Grid2>
 
         {/* Dual Calender ( MD- ) */}
-        <Grid2 container display={{ xs: "flex", md: "none" }}>
+        <Grid2 container display={{ xs: "flex", md: single ? "flex" : "none" }}>
           <SingleCalender
             firstMonth={firstMonth}
             secondMonth={secondMonth}
@@ -275,7 +277,7 @@ export const Sections = (props: SectionsProps) => {
         </Grid2>
 
         {/* Dual Calender ( MD+ ) */}
-        <Grid2 flex={1} display={{ xs: "none", md: "flex" }} container>
+        <Grid2 flex={1} display={{ xs: "none", md: single ? "none" : "flex" }} container>
           <DuelCalender
             firstMonth={firstMonth}
             secondMonth={secondMonth}
@@ -324,6 +326,7 @@ export const Sections = (props: SectionsProps) => {
                 onCloseCallback={onCloseCallback}
                 onSubmit={handlers.handleClickSubmit}
                 RangeSeparatorIcons={RangeSeparatorIcons}
+                single={single}
               />
             </Grid2>
           </>

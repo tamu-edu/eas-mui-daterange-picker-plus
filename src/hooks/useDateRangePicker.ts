@@ -163,6 +163,10 @@ export const useDateRangePicker = (props: useDateRangePickerProps) => {
       const newRange = { startDate, endDate: newDay };
       onChangeCallback && onChangeCallback(newRange);
       if (!dateRange) setInternalDateRange(newRange);
+    } else if (minDays === 0 && maxDays === 0) {
+      const newRange = { startDate: day, endDate: day };
+      if (!dateRange) setInternalDateRange(newRange);
+      onChangeCallback && onChangeCallback(newRange);
     } else {
       // * check for a valid Start Date
       if (!dateRange) setInternalDateRange({ startDate: day, endDate: undefined });
