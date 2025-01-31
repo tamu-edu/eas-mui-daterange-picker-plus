@@ -125,9 +125,15 @@ export const useDateRangePicker = (props: useDateRangePickerProps) => {
       const diff = differenceInDays(newEnd, newStart);
       range.startDate = newStart = max([newStart, minValidDate]);
       if (minDays && diff < minDays) {
-        range.endDate = newEnd = min([addDays(newStart, minDays), maxValidDate]);
-      } else  if (maxDays && diff > maxDays) {
-        range.endDate = newEnd = min([addDays(newStart, maxDays), maxValidDate]);
+        range.endDate = newEnd = min([
+          addDays(newStart, minDays),
+          maxValidDate,
+        ]);
+      } else if (maxDays && diff > maxDays) {
+        range.endDate = newEnd = min([
+          addDays(newStart, maxDays),
+          maxValidDate,
+        ]);
       } else {
         range.endDate = newEnd = min([newEnd, maxValidDate]);
       }
@@ -154,7 +160,7 @@ export const useDateRangePicker = (props: useDateRangePickerProps) => {
       let newDay;
       if (minDays && diff < minDays) {
         newDay = min([addDays(startDate, minDays), maxValidDate]);
-      } else  if (maxDays && diff > maxDays) {
+      } else if (maxDays && diff > maxDays) {
         newDay = min([addDays(startDate, maxDays), maxValidDate]);
       } else {
         newDay = day;
@@ -167,9 +173,15 @@ export const useDateRangePicker = (props: useDateRangePickerProps) => {
       const newRange = { startDate: day, endDate: day };
       if (!dateRange) setInternalDateRange(newRange);
       onChangeCallback && onChangeCallback(newRange);
+    } else if (minDays && maxDays) {
+      const newEndDay = addDays(day, maxDays);
+      const newRange = { startDate: day, endDate: newEndDay };
+      if (!dateRange) setInternalDateRange(newRange);
+      onChangeCallback && onChangeCallback(newRange);
     } else {
       // * check for a valid Start Date
-      if (!dateRange) setInternalDateRange({ startDate: day, endDate: undefined });
+      if (!dateRange)
+        setInternalDateRange({ startDate: day, endDate: undefined });
     }
     setHoverDay(day);
   };
@@ -177,7 +189,7 @@ export const useDateRangePicker = (props: useDateRangePickerProps) => {
   const handleClickSubmit = () => {
     const { startDate, endDate } = dateRange || internalDateRange;
     if (onSubmitCallback && startDate && endDate) {
-      onSubmitCallback(dateRange||internalDateRange);
+      onSubmitCallback(dateRange || internalDateRange);
     }
     // handleSetCalenderNum(0);
   };
